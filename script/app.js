@@ -15,7 +15,7 @@ var Comment = React.createClass({
           <a href="generic.html">
             <h2>{props.item.gsx$name.$t}</h2>
             <div className="content">
-              <h1>{props.item.gsx$price.$t}/{props.item.gsx$sat.$t}</h1>
+              <h1>{'Rp '+numeral(props.item.gsx$price.$t).format('0,0')}/{props.item.gsx$sat.$t}</h1>
             </div>
           </a>
         </article>
