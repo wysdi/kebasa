@@ -1,3 +1,4 @@
+moment.locale('id');  
 var Comment = React.createClass({
 
   render: function() {
@@ -8,17 +9,11 @@ var Comment = React.createClass({
     if (props.item.gsx$image.$t)
       image = props.item.gsx$image.$t;
     return (
-      <article className="style6" >
-          <span className="image">
-            <img src={image} alt="" />
-          </span>
-          <a href="generic.html">
-            <h2>{props.item.gsx$name.$t}</h2>
-            <div className="content">
-              <h1>{'Rp '+numeral(props.item.gsx$price.$t).format('0,0')}/{props.item.gsx$sat.$t}</h1>
-            </div>
-          </a>
-        </article>
+       <tr>
+          <td>{props.item.gsx$name.$t}</td>
+          <td>{props.item.gsx$sat.$t}</td>
+          <td>{'Rp '+numeral(props.item.gsx$price.$t).format('0,0')}/{props.item.gsx$sat.$t}</td>
+        </tr>
     );
   }
 });
@@ -31,7 +26,7 @@ var CommentBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data['feed']['entry'], update: new Date()});
+        this.setState({data: data['feed']['entry'], update: moment().format('LLLL')});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
@@ -46,16 +41,40 @@ var CommentBox = React.createClass({
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function() {
+    var options = {
+    weekday: "long", year: "numeric", month: "short",
+    day: "numeric", hour: "2-digit", minute: "2-digit"
+};
     return (
           <div id="main">
             <div className="inner">
                 <header>
-                <h1>Harga Sembako Bali</h1>
+                <h1>Sari Kebasa</h1>
                 <p>Update : {this.state.update.toString()}</p>
               </header>
-                  <CommentList data={this.state.data} />
-              
+              <h3>Daftar Harga</h3>
+              <CommentList data={this.state.data} />
+              <section>
+                <h2>Get in touch</h2>
+                <form method="post" action="#">
+                  <div className="field half first">
+                    <input type="text" name="name" id="name" placeholder="Name" />
+                  </div>
+                  <div className="field half">
+                    <input type="email" name="email" id="email" placeholder="Email" />
+                  </div>
+                  <div className="field">
+                    <div className="textarea-wrapper"><textarea name="message" id="message" placeholder="Message" rows="1" 
+                    style={{overflow: 'hidden', resize: 'none', height: 59+'px'}}></textarea></div>
+                  </div>
+                  <ul className="actions">
+                    <li><input type="submit" value="Send" className="special" /></li>
+                  </ul>
+                </form>
+              </section>
             </div>
+              
+            
           </div>
     );
   }
@@ -69,9 +88,23 @@ var CommentList = React.createClass({
       );
     });
     return (
-           <section className="tiles" >
-        {commentNodes}
-      </section>
+           <section>
+           <div className="table-wrapper">
+              <table className="alt">
+                <thead>
+                  <tr>
+                    <th>Komoditi</th>
+                    <th>Satuan</th>
+                    <th>Harga</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commentNodes}
+                </tbody>
+
+              </table>
+            </div>
+            </section>
     );
   }
 });
