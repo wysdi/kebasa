@@ -4,15 +4,12 @@ var Comment = React.createClass({
   render: function() {
     const {...props} = this.props; 
 
-    var image='http://placehold.it/400x300';
 
-    if (props.item.gsx$image.$t)
-      image = props.item.gsx$image.$t;
     return (
        <tr>
           <td>{props.item.gsx$name.$t}</td>
           <td>{props.item.gsx$sat.$t}</td>
-          <td>{'Rp '+numeral(props.item.gsx$price.$t).format('0,0')}/{props.item.gsx$sat.$t}</td>
+          <td>{numeral(props.item.gsx$price.$t).format('0,0')}</td>
         </tr>
     );
   }
@@ -26,7 +23,7 @@ var CommentBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data['feed']['entry'], update: moment().format('LLLL')});
+        this.setState({data: data['feed']['entry'], update: moment().format('LLLL'), loading:false});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
@@ -34,52 +31,56 @@ var CommentBox = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: [], update:''};
+    return {data: [], update:'', loading: true};
   },
   componentDidMount: function() {
     this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    // setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+  },
+
+  componentDidUpdate: function() {
+   this.render();
+ },
+
+  reloadData: function() {
+     this.setState({loading:true});
+   this.loadCommentsFromServer();
   },
   render: function() {
     var options = {
     weekday: "long", year: "numeric", month: "short",
     day: "numeric", hour: "2-digit", minute: "2-digit"
 };
+
+  const { loading, update, data } = this.state;
+
+    let btnClass = loading ? 'button special' : 'button';
     return (
+
           <div id="main">
             <div className="inner">
                 <header>
-                <h1>Sari Kebasa</h1>
-                <p>Update : {this.state.update.toString()}</p>
+                <h1>Harga Sembako</h1>
+                <p>Update : {update.toString()}</p>
               </header>
-              <h3>Daftar Harga</h3>
-              <CommentList data={this.state.data} />
-              <section>
-                <h2>Get in touch</h2>
-                <form method="post" action="#">
-                  <div className="field half first">
-                    <input type="text" name="name" id="name" placeholder="Name" />
-                  </div>
-                  <div className="field half">
-                    <input type="email" name="email" id="email" placeholder="Email" />
-                  </div>
-                  <div className="field">
-                    <div className="textarea-wrapper"><textarea name="message" id="message" placeholder="Message" rows="1" 
-                    style={{overflow: 'hidden', resize: 'none', height: 59+'px'}}></textarea></div>
-                  </div>
-                  <ul className="actions">
-                    <li><input type="submit" value="Send" className="special" /></li>
-                  </ul>
-                </form>
-              </section>
+              <h3>Daftar Harga <a href="#" onClick={this.reloadData} className={btnClass} style={{float:'right'}}>Reload</a></h3> 
+              {loading ? <h3 style={{textAlign:'center'}}>Loading . . . .</h3> : 
+              <div>
+                <CommentList data={data} /> 
+                
+              </div>
+              }
             </div>
-              
-            
           </div>
     );
   }
 });
-
+// <section>
+//                   <b>Hubungi Kami</b>
+//                   <p>Jln. Werkudara 1, No 10 <br />
+//                   Br. Karangjung, Sembung, Mengwi, Badung <br />
+//                   Phone: <strong>082 144 647 512</strong></p>
+//                 </section>
 var CommentList = React.createClass({
   render: function() {
     var commentNodes = this.props.data.map(function(comment, k) {
@@ -95,7 +96,7 @@ var CommentList = React.createClass({
                   <tr>
                     <th>Komoditi</th>
                     <th>Satuan</th>
-                    <th>Harga</th>
+                    <th>Harga (Rp)</th>
                   </tr>
                 </thead>
                 <tbody>
