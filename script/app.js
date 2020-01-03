@@ -3,8 +3,6 @@ var Comment = React.createClass({
 
   render: function() {
     const {...props} = this.props; 
-
-
     return (
        <tr>
           <td>{props.item.gsx$name.$t}</td>
@@ -95,8 +93,7 @@ var CommentList = React.createClass({
                 <thead>
                   <tr>
                     <th>Komoditi</th>
-                    <th>Satuan</th>
-                    <th>Harga (Rp)</th>
+                    <th>Harga (Rp) / Kg</th>
                   </tr>
                 </thead>
                 <tbody>
