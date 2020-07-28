@@ -92,8 +92,9 @@ var CommentList = React.createClass({
               <table className="alt">
                 <thead>
                   <tr>
-                    <th>Komoditi</th>
-                    <th>Harga (Rp) / Kg</th>
+                    <th>Nama</th>
+                    <th>Jenis</th>
+                    <th>Harga</th>
                   </tr>
                 </thead>
                 <tbody>
