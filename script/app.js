@@ -2,12 +2,12 @@ moment.locale('id');
 var Comment = React.createClass({
 
   render: function() {
-    const {...props} = this.props; 
+    const { nama, jenis, harga} = this.props.item;
     return (
        <tr>
-          <td>{props.item.gsx$name.$t}</td>
-          <td>{props.item.gsx$sat.$t}</td>
-          <td>{numeral(props.item.gsx$price.$t).format('0,0')}</td>
+          <td>{nama}</td>
+          <td>{jenis}</td>
+          <td>{harga}</td>
         </tr>
     );
   }
@@ -15,13 +15,13 @@ var Comment = React.createClass({
 
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
-    var url = 'https://spreadsheets.google.com/feeds/list/1q8pmdxdsoU-WPFYPYg8M7yePzM8ekh2C2T0xUqhPPP0/od6/public/values?alt=json&amp;callback=displayContent';
+    var url = '/.netlify/functions/infopangan';
     $.ajax({
       url: url,
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data['feed']['entry'], update: moment().format('LLLL'), loading:false});
+        this.setState({data: data, update: moment().format('LLLL'), loading:false});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
