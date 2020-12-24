@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/kebasa/static/css/main.bab0b925.chunk.css",
+    "main.js": "/kebasa/static/js/main.b532b404.chunk.js",
+    "main.js.map": "/kebasa/static/js/main.b532b404.chunk.js.map",
+    "runtime-main.js": "/kebasa/static/js/runtime-main.aeffc67d.js",
+    "runtime-main.js.map": "/kebasa/static/js/runtime-main.aeffc67d.js.map",
+    "static/js/2.e161edda.chunk.js": "/kebasa/static/js/2.e161edda.chunk.js",
+    "static/js/2.e161edda.chunk.js.map": "/kebasa/static/js/2.e161edda.chunk.js.map",
+    "static/js/3.864f8b3b.chunk.js": "/kebasa/static/js/3.864f8b3b.chunk.js",
+    "static/js/3.864f8b3b.chunk.js.map": "/kebasa/static/js/3.864f8b3b.chunk.js.map",
+    "index.html": "/kebasa/index.html",
+    "static/css/main.bab0b925.chunk.css.map": "/kebasa/static/css/main.bab0b925.chunk.css.map",
+    "static/js/2.e161edda.chunk.js.LICENSE.txt": "/kebasa/static/js/2.e161edda.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.aeffc67d.js",
+    "static/js/2.e161edda.chunk.js",
+    "static/css/main.bab0b925.chunk.css",
+    "static/js/main.b532b404.chunk.js"
+  ]
+}
